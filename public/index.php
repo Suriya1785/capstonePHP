@@ -33,10 +33,10 @@
 
     <hr />
 
-    <?php include="incl/footer.php" ?>
+    <?php include("incl/footer.php") ?>
 
     <!-- Optional JavaScript -->
-    <?php include="incl/includes.php" ?>
+    <?php include("incl/includes.php") ?>
    
 </body>
 
