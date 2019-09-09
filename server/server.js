@@ -15,7 +15,7 @@ let fs = require("fs");
 
 let app = express();
 
-// enable CORS
+// enable CORS functonality
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
