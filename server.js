@@ -15,6 +15,16 @@ let fs = require("fs");
 
 let app = express();
 
+// enable CORS
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    next();
+});
+
+const host = '127.0.0.1';
+
 // Create application/x-www-form-urlencoded parser
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -185,14 +195,15 @@ app.get("/index.html", function(req, res) {
 // GET QUOTE TAGS
 app.get("/api/quotes", function(req, res) {
     console.log("Received a GET request for quotes");
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/quotes.json", "utf8");
     data = JSON.parse(data);
 
-    // console.log("Returned leagues are: ");
-    // for(let i = 0; i < data.length; i++) {
-    //   console.log("League: " + data[i].Name);
-    // }
+    console.log("Returned leagues are: ");
+    for (let i = 0; i < data.length; i++) {
+        console.log("quotes: " + data[i].author);
+    }
     res.end(JSON.stringify(data));
 });
 
@@ -200,20 +211,23 @@ app.get("/api/quotes", function(req, res) {
 // GET LEAGUES
 app.get("/api/leagues", function(req, res) {
     console.log("Received a GET request for leagues");
+    // If you get a CORS error, add the following line:
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/leagues.json", "utf8");
     data = JSON.parse(data);
 
-    // console.log("Returned leagues are: ");
-    // for(let i = 0; i < data.length; i++) {
-    //   console.log("League: " + data[i].Name);
-    // }
+    console.log("Returned leagues are: ");
+    for (let i = 0; i < data.length; i++) {
+        console.log("League: " + data[i].Name);
+    }
     res.end(JSON.stringify(data));
 });
 
 // GET ALL TEAMS
 app.get("/api/teams", function(req, res) {
     console.log("Received a GET request for ALL teams");
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/teams.json", "utf8");
     data = JSON.parse(data);
@@ -227,6 +241,7 @@ app.get("/api/teams", function(req, res) {
 app.get("/api/teams/:id", function(req, res) {
     let id = req.params.id;
     console.log("Received a GET request for team " + id);
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/teams.json", "utf8");
     data = JSON.parse(data);
@@ -246,6 +261,7 @@ app.get("/api/teams/:id", function(req, res) {
 app.get("/api/teams/byleague/:id", function(req, res) {
     let id = req.params.id;
     console.log("Received a GET request for teams in league " + id);
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/teams.json", "utf8");
     data = JSON.parse(data);
@@ -262,6 +278,7 @@ app.get("/api/teams/byleague/:id", function(req, res) {
 app.get("/api/teams/:teamid/members/:memberid", function(req, res) {
     let teamId = req.params.teamid;
     let memberId = req.params.memberid;
+    // res.setHeader('Access-Control-Allow-Origin', '*');
     console.log("Received a GET request for member " + memberId + " on team " + teamId);
 
     let data = fs.readFileSync(__dirname + "/data/teams.json", "utf8");
@@ -291,6 +308,7 @@ app.get("/api/teams/:teamid/members/:memberid", function(req, res) {
 app.post("/api/teams", upload.single('teamimage'), function(req, res) {
     console.log("Received a POST request to add a team");
     console.log("BODY -------->" + JSON.stringify(req.body));
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     try {
         if (req.file.filename) {
@@ -416,6 +434,8 @@ app.put("/api/teams", urlencodedParser, function(req, res) {
     console.log("Received a PUT request to edit a team");
     console.log("BODY -------->" + JSON.stringify(req.body));
 
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+
     // assemble team information so we can validate it
     let team = {
         TeamId: req.body.teamid,
@@ -494,6 +514,7 @@ app.put("/api/teams", urlencodedParser, function(req, res) {
 app.delete("/api/teams/:id", function(req, res) {
     let id = req.params.id;
     console.log("Received a DELETE request for team " + id);
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     let data = fs.readFileSync(__dirname + "/data/teams.json", "utf8");
     data = JSON.parse(data);
@@ -519,6 +540,7 @@ app.post("/api/teams/:id/members", urlencodedParser, function(req, res) {
     let teamId = req.params.id;
     console.log("Received a POST request to add a member to team " + teamId);
     console.log("BODY -------->" + JSON.stringify(req.body));
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     // assemble member information so we can validate it
     let member = {
@@ -575,6 +597,7 @@ app.put("/api/teams/:id/members", urlencodedParser, function(req, res) {
     let teamId = req.params.id;
     console.log("Received a PUT request to edit a member on team " + teamId);
     console.log("BODY -------->" + JSON.stringify(req.body));
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     // assemble member information so we can validate it
     let member = {
@@ -684,7 +707,20 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 let server = app.listen(8081, function() {
-    let port = server.address().port
-
+    let port = server.address().port;
     console.log("App listening at port %s", port)
 })
+
+/*
+// http://127.0.0.1:8081
+http.createServer((request, response) => {
+    // If you get a CORS error, add the following line:
+    response.setHeader('Access-Control-Allow-Origin', '*');
+
+    // set Content-Type for JSON
+    response.setHeader('Content-Type', 'application/json');
+    response.end(fs.readFileSync(data));
+}).listen(port, host);
+
+console.log(`http://${host}:${port}`);
+*/
