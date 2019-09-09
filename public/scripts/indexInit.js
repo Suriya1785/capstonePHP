@@ -267,7 +267,7 @@ function getRankings(leagues) {
     let rankingArray = [];
     $.each(leagues, function(key, value) {
         // Get all teams under league to find out the topmost team based on points
-        $.getJSON(`http://localhost:8081//api/teams/byleague/${value.Code}`, function(data) {
+        $.getJSON(`http://localhost:8081/api/teams/byleague/${value.Code}`, function(data) {
                 teams = data;
             })
             .done(function() {
@@ -668,7 +668,7 @@ function submitRegForm(leagueCode, theForm) {
     if (isDataValid) {
         $.ajax({
                 type: 'POST',
-                url: `/api/teams/`,
+                url: `http://localhost:8081/api/teams/`,
                 data: formData,
                 processData: false,
                 contentType: false
@@ -783,7 +783,7 @@ function getTeams(leagueCode) {
  */
 function getAllTeams() {
     // AJAX call to get all Teams from all leagues
-    $.getJSON("/api/teams", function(data) {
+    $.getJSON("http://localhost:8081/api/teams", function(data) {
             teams = data;
         })
         .done(function() {
@@ -806,7 +806,7 @@ function getAllTeams() {
 function getTeamsPerLeague(leagueCode) {
 
     //AJAX call to get all teams under a league
-    $.getJSON(`/api/teams/byleague/${leagueCode}`, function(data) {
+    $.getJSON(`http://localhost:8081/api/teams/byleague/${leagueCode}`, function(data) {
             teams = data;
         })
         .done(function() {
@@ -899,7 +899,7 @@ function createTableHead() {
 function getTeamDetail(TeamId) {
 
     // Pull team details under a teamId
-    $.getJSON(`/api/teams/${TeamId}`, function(data) {
+    $.getJSON(`http://localhost:8081/api/teams/${TeamId}`, function(data) {
             team = data;
         })
         .done(function() {
@@ -1147,7 +1147,7 @@ function createTableMemberHead() {
  */
 function getEditTeam(TeamId) {
     // Pull team details under a teamId
-    $.getJSON(`/api/teams/${TeamId}`, function(data) {
+    $.getJSON(`http://localhost:8081/api/teams/${TeamId}`, function(data) {
             team = data;
         })
         .done(function() {
@@ -1335,7 +1335,7 @@ function submitEditForm(TeamId, team) {
     let isDataValid = validateForm(team);
     if (isDataValid) {
         $.ajax({
-            url: '/api/teams',
+            url: 'http://localhost:8081/api/teams',
             type: "PUT",
             data: $("#editTeamForm").serialize()
                 // contentType: 'application/json'
@@ -1455,7 +1455,7 @@ function getModalTemplate(label, id, modalBodyId, modalFooterId) {
  */
 function subDelTeam(TeamId) {
     $.ajax({
-        url: `/api/teams/${TeamId}`,
+        url: `http://localhost:8081/api/teams/${TeamId}`,
         type: "DELETE",
         // data: $("#editTeamForm").serialize()
         // contentType: 'application/json'
@@ -1599,7 +1599,7 @@ function submitRegMembForm(team) {
     let isDataValid = validateMembForm(team);
     if (isDataValid) {
         // AJAX call to send the form data to server upon serialization 
-        $.post(`/api/teams/${team.TeamId}/members`, $("#newMembForm").serialize(),
+        $.post(`http://localhost:8081/api/teams/${team.TeamId}/members`, $("#newMembForm").serialize(),
                 function(data) {
                     // upon successful addition of team, take back to added league and show the added team along with others in the league
                     errorMsg = "Member has been successfully added";
@@ -1841,7 +1841,7 @@ function getTeamMembDetails(MemberId, team) {
  */
 function getMember(MemberId, TeamId) {
     // Pull team details under a teamId
-    $.getJSON(`/api/teams/${TeamId}/members/${MemberId}`, function(data) {
+    $.getJSON(`http://localhost:8081/api/teams/${TeamId}/members/${MemberId}`, function(data) {
             member = data;
         })
         .done(function() {
@@ -1944,7 +1944,7 @@ function subEditMembForm(MemberId, team) {
     let isDataValid = validateMembForm(team);
     if (isDataValid) {
         $.ajax({
-            url: `/api/teams/${team.TeamId}/members`,
+            url: `http://localhost:8081/api/teams/${team.TeamId}/members`,
             type: "PUT",
             data: $("#editMembForm").serialize()
         }).done(function() {
@@ -2023,7 +2023,7 @@ function delMemb(MemberId, team) {
  */
 function subDelMemb(MemberId, team) {
     $.ajax({
-        url: `/api/teams/${team.TeamId}/members/${MemberId}`,
+        url: `http://localhost:8081/api/teams/${team.TeamId}/members/${MemberId}`,
         type: "DELETE",
         // contentType: 'application/json'
     }).done(function() {
