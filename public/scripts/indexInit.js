@@ -153,7 +153,7 @@ function getHomeSection() {
  */
 function getLeagues() {
     // Store the JSON data in javaScript objects (Pull leagues from server).  
-    $.getJSON("/api/leagues/", function(data) {
+    $.getJSON("http://localhost:8081/api/leagues/", function(data) {
             leagues = data;
         })
         .done(function() {
@@ -222,7 +222,7 @@ function loadleagues(leagues) {
  * Called by: getHomeSection
  */
 function getQuoteTag() {
-    $.getJSON("/api/quotes/", function(data) {
+    $.getJSON("http://localhost:8081/api/quotes/", function(data) {
             quotes = data;
         })
         .done(function() {
@@ -267,7 +267,7 @@ function getRankings(leagues) {
     let rankingArray = [];
     $.each(leagues, function(key, value) {
         // Get all teams under league to find out the topmost team based on points
-        $.getJSON(`/api/teams/byleague/${value.Code}`, function(data) {
+        $.getJSON(`http://localhost:8081//api/teams/byleague/${value.Code}`, function(data) {
                 teams = data;
             })
             .done(function() {
