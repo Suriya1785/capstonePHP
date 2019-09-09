@@ -1,6 +1,7 @@
 /* Script to support single page app for cricket leagues
  * Author: HartCode programmer
  * Date: 08/28/2019
+ * 09/09/2019: updated localhost in ajax call to go to specifically 8081
  */
 "Use Strict";
 /* window onload/ready function to load page with leagues, top team in each leagues and assign event for anchor functions. 
