@@ -37,6 +37,10 @@
 
     <!-- Optional JavaScript -->
     <?php include("incl/includes.php") ?>
+
+    <!-- Custom JavaScripts-->
+    <script src="scripts/indexInit.js"></script>
+    <script src="scripts/validate.js"></script>
    
 </body>
 
