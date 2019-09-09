@@ -4,7 +4,7 @@
 
 Website URL: http://localhost:8081/index.html
 
-![WebsitePromo](public/images/readMeimg.PNG)
+![WebsitePromo](client/images/readMeimg.PNG)
 
 ## Purpose:
 Helps to execute cricket leagues by registering teams under different leagues, managing participating teams, team members.
